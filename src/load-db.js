@@ -1,4 +1,4 @@
-// using ES6 syntax
+// using ES6 syntax - will be transpiled by Babel to ES5 for OrientDB's console.sh
 
 // gets the RID for the inserted entity
 function getRid(result) {
@@ -25,6 +25,14 @@ function dbInsertMessage(sender, text, date, conversation) {
   dbUpdate('UPDATE ' + conversation + ' ADD messages=' + messageRid);
 }
 
+// inserts a conversation and updates each account pointing to it
+function dbInsertConversation(type, participants) {
+  const conv = dbInsert('insert into Conversation (type, participants) values (\'' + type + '\', [' + participants + '])');
+  for (const peer of participants) {
+    dbUpdate('UPDATE ' + peer + ' ADD conversations=' + conv);
+  }
+}
+
 // load some accounts
 const ana = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Ana\', \'password\', \'ana@email.com\', \'member\' );');
 const cindy = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Cindy\', \'password\', \'cindy@email.com\', \'consierge\' );');
@@ -37,10 +45,11 @@ const jim = dbInsertAccount('Jim', 'password', 'Jim@email.com', 'member');
 const tudor = dbInsertAccount('Tudor', 'password', 'Tudor@email.com', 'member');
 
 // start conversations
-const conv1 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + ana + ',' + cindy + ',' + dan + '])');
-const conv2 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + anca + ',' + jim + '])');
-const conv3 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + ana + ',' + ioana + ',' + tudor + '])');
-const conv4 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + radu + ',' + cindy + '])');
+const conv1 = dbInsertConversation('chat', [ ana, cindy, dan]);
+const conv2 = dbInsertConversation('chat', [ anca, jim]);
+const conv3 = dbInsertConversation('chat', [ ana, ioana, tudor]);
+const conv4 = dbInsertConversation('chat', [ radu, cindy]);
+const conv5 = dbInsertConversation('chat', [ ana, radu]);
 
 // insert some messages & updates the conversation
 const msg1 = dbInsert('INSERT INTO Message (sender, text, date, conversation) VALUES (' + ana + ', \'blah blah yoo\', \'2015-09-09 10:45:05\', ' + conv1 + ')');
