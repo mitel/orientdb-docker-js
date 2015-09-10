@@ -1,0 +1,57 @@
+-- testdb
+
+-- don't stop if the 'drop database' command fails
+set ignoreErrors true ;
+
+drop database remote:localhost/testdb root password ;
+
+create database remote:localhost/testdb root password plocal ;
+
+connect remote:localhost/testdb admin admin ;
+
+-- -------------------------------------------------------------
+
+CREATE CLASS Account EXTENDS V ; 
+
+CREATE PROPERTY account.username STRING ;  
+ 
+CREATE PROPERTY account.password STRING ;  
+
+CREATE PROPERTY account.email STRING ;  
+
+CREATE PROPERTY account.subscriptionStartDate DATETIME ; 
+
+CREATE PROPERTY account.subscriptionEndDate DATETIME ; 
+
+CREATE PROPERTY account.role STRING ; 
+
+CREATE PROPERTY account.membership STRING ; 
+
+CREATE PROPERTY account.conversations LINKSET ; 
+
+-- -------------------------------------------------------------
+
+CREATE CLASS Conversation EXTENDS V ; 
+
+CREATE PROPERTY conversation.acl EMBEDDEDMAP ; 
+
+CREATE PROPERTY conversation.participants LINKLIST ; 
+
+CREATE PROPERTY conversation.type STRING ; 
+
+CREATE PROPERTY conversation.messages EMBEDDEDLIST ; 
+
+-- -------------------------------------------------------------
+
+CREATE CLASS Message ; 
+
+CREATE PROPERTY message.text STRING ; 
+
+CREATE PROPERTY message.date DATETIME ;  
+
+CREATE PROPERTY message.sender LINK ; 
+
+CREATE PROPERTY message.conversation LINK ; 
+
+
+exit ;
