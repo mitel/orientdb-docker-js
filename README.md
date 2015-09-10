@@ -5,7 +5,7 @@
   * ```supervisord.conf``` - supervisor is used as daemon manager to run OrientDB and our JS script. The JS script is supposed to run one time and exit. 
   * ```orientdb-server-config.xml``` - OrientDB config file. You can customize this for root password and so.
   * ```load-db.js``` - a JavaScript to be run by OrientDB's console.sh where you can put INSERTs, UPDATEs etc. This script will be compiled by Webpack to ES5. Theoretically you could use here ES6 and require/import external modules - not tested. The generated file will land in the ```src``` folder in order to be bundled by docker.
-  * ```inject.sh``` - inserts few lines in the webpack generated file
+  * ```inject.sh``` - inserts few lines in the webpack generated file, to make it runnable by OrientDB's console.sh
   * ```testdb.graph``` - a SQL script to create your graph entities. May be done also from JS.
 
 ####Install & use: 
