@@ -14,5 +14,5 @@
   * if you see ```INFO exited: testdb (exit status 0; expected)```, your test db is ready. a docker container named ```orientdb``` is running. the docker image is called ```mitel/orientdb```
   * configure your VM to forward ports 2424 and 2480 to your physical host
   * open a browser to http://localhost:2480 and login with admin/admin or root/password
-  * ```npm run watch-client``` then http://localhost:8080
+  * ```npm run watch-client``` then http://localhost:2480
   * ```docker exec -it orientdb bash``` and ```/orientdb/bin/console.sh``` if you want to play from the CLI
