@@ -1,48 +1,50 @@
+// using ES6 syntax
+
 // gets the RID for the inserted entity
-var getRid = function(result) {
-	return result.toString().split(/#|{/)[1];
+function getRid(result) {
+  return result.toString().split(/#|{/)[1];
 }
 
 // wrapper around db.executeCommand to return directly the RID when INSERTing
-var dbInsert = function(statement) {
-	var result = db.executeCommand(statement);
-	return getRid(result);
+function dbInsert(statement) {
+  const result = db.executeCommand(statement);
+  return getRid(result);
 }
 
-var dbInsertAccount = function(user, pass, email, role) {
-	return dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\''+user+'\', \''+pass+'\', \''+email+'\', \''+role+'\' );');
+function dbInsertAccount(user, pass, email, role) {
+  return dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'' + user + '\', \'' + pass + '\', \'' + email + '\', \'' + role + '\' );');
+}
+
+function dbUpdate(statement) {
+  return dbInsert(statement);
 }
 
 // inserts a message and then adds it to the conversation
-var dbInsertMessage = function(sender, text, date, conversation) {
-	var messageRid = dbInsert('INSERT INTO Message (sender, text, date, conversation) VALUES ('+sender+', \''+text+'\', \''+date+'\', '+conversation+')');
-	dbUpdate('UPDATE '+conversation+' ADD messages='+messageRid);
-}
-
-var dbUpdate = function(statement) {
-	return dbInsert(statement);
+function dbInsertMessage(sender, text, date, conversation) {
+  const messageRid = dbInsert('INSERT INTO Message (sender, text, date, conversation) VALUES (' + sender + ', \'' + text + '\', \'' + date + '\', ' + conversation + ')');
+  dbUpdate('UPDATE ' + conversation + ' ADD messages=' + messageRid);
 }
 
 // load some accounts
-var ana = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Ana\', \'password\', \'ana@email.com\', \'member\' );');
-var cindy = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Cindy\', \'password\', \'cindy@email.com\', \'consierge\' );');
-var dan = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Dan\', \'password\', \'dan@email.com\', \'member\' );');
-var ioana = dbInsertAccount('Ioana', 'password', 'ioana@email.com', 'member');
-var dana = dbInsertAccount('Dana', 'password', 'Dana@email.com', 'member');
-var radu = dbInsertAccount('Radu', 'password', 'Radu@email.com', 'member');
-var anca = dbInsertAccount('Anca', 'password', 'Anca@email.com', 'member');
-var jim = dbInsertAccount('Jim', 'password', 'Jim@email.com', 'member');
-var tudor = dbInsertAccount('Tudor', 'password', 'Tudor@email.com', 'member');
+const ana = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Ana\', \'password\', \'ana@email.com\', \'member\' );');
+const cindy = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Cindy\', \'password\', \'cindy@email.com\', \'consierge\' );');
+const dan = dbInsert('INSERT INTO Account (username, password, email, role) VALUES (\'Dan\', \'password\', \'dan@email.com\', \'member\' );');
+const ioana = dbInsertAccount('Ioana', 'password', 'ioana@email.com', 'member');
+const dana = dbInsertAccount('Dana', 'password', 'Dana@email.com', 'member');
+const radu = dbInsertAccount('Radu', 'password', 'Radu@email.com', 'member');
+const anca = dbInsertAccount('Anca', 'password', 'Anca@email.com', 'member');
+const jim = dbInsertAccount('Jim', 'password', 'Jim@email.com', 'member');
+const tudor = dbInsertAccount('Tudor', 'password', 'Tudor@email.com', 'member');
 
 // start conversations
-var conv1 = dbInsert('insert into Conversation (type, participants) values (\'chat\', ['+ana+','+cindy+','+dan+'])');
-var conv2 = dbInsert('insert into Conversation (type, participants) values (\'chat\', ['+anca+','+jim+'])');
-var conv3 = dbInsert('insert into Conversation (type, participants) values (\'chat\', ['+ana+','+ioana+','+tudor+'])');
-var conv4 = dbInsert('insert into Conversation (type, participants) values (\'chat\', ['+radu+','+cindy+'])');
+const conv1 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + ana + ',' + cindy + ',' + dan + '])');
+const conv2 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + anca + ',' + jim + '])');
+const conv3 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + ana + ',' + ioana + ',' + tudor + '])');
+const conv4 = dbInsert('insert into Conversation (type, participants) values (\'chat\', [' + radu + ',' + cindy + '])');
 
-//insert some messages & updates the conversation
-var msg1 = dbInsert('INSERT INTO Message (sender, text, date, conversation) VALUES ('+ana+', \'blah blah yoo\', \'2015-09-09 10:45:05\', '+conv1+')');
-dbUpdate('UPDATE '+conv1+' ADD messages='+msg1);
+// insert some messages & updates the conversation
+const msg1 = dbInsert('INSERT INTO Message (sender, text, date, conversation) VALUES (' + ana + ', \'blah blah yoo\', \'2015-09-09 10:45:05\', ' + conv1 + ')');
+dbUpdate('UPDATE ' + conv1 + ' ADD messages=' + msg1);
 
 dbInsertMessage(anca, 'hello', '2015-09-09 10:45:07', conv2);
 dbInsertMessage(jim, 'hello', '2015-09-09 10:45:08', conv2);

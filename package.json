@@ -4,8 +4,8 @@
   "description": "An OrientDB toolchain using Docker, npm and Webpack",
   "main": "",
   "scripts": {
-    "docker-deploy":"docker stop orientdb; docker rm orientdb; docker build -t mitel/orientdb src/; docker run -d --name=\"orientdb\" -p 2424:2424 -p 2480:2480 mitel/orientdb; docker logs -f orientdb",
-    "inject-orientdb-jss":"sh ./src/inject.sh",
+    "docker-deploy": "docker stop orientdb; docker rm orientdb; docker build -t mitel/orientdb src/; docker run -d --name=\"orientdb\" -p 2424:2424 -p 2480:2480 mitel/orientdb; docker logs -f orientdb",
+    "inject-orientdb-jss": "sh ./src/inject.sh",
     "build-db-script": "webpack --verbose --colors --display-error-details --config webpack.config.js",
     "deploy": "npm run build-db-script; npm run inject-orientdb-jss; npm run docker-deploy"
   },
@@ -14,10 +14,13 @@
     "type": "git",
     "url": "https://github.com/mitel/orientdb-docker-js"
   },
-  "keywords": ["orientdb","webpack","docker"],
+  "keywords": [
+    "orientdb",
+    "webpack",
+    "docker"
+  ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^5.8.23",
     "babel-core": "^5.8.23",
@@ -27,6 +30,7 @@
     "eslint": "^1.3.1",
     "eslint-config-airbnb": "^0.0.8",
     "eslint-plugin-babel": "^2.1.1",
+    "eslint-plugin-react": "^3.3.2",
     "file-loader": "^0.8.4",
     "imports-loader": "^0.6.4",
     "json-loader": "^0.5.2",
