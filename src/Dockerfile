@@ -8,10 +8,10 @@ RUN apt-get update && apt-get upgrade -y && \
 
 WORKDIR /
 
-RUN wget "http://orientdb.com/download.php?email=unknown@unknown.com&file=orientdb-community-2.1.1.tar.gz&os=linux" -O orientdb-community-2.1.1.tar.gz &&\
-    tar -zxvf orientdb-community-2.1.1.tar.gz && \
-    mv orientdb-community-2.1.1 orientdb && \
-    rm -rf orientdb-community-2.1.1.tar.gz && \
+RUN wget "http://orientdb.com/download.php?email=unknown@unknown.com&file=orientdb-community-2.1.5.tar.gz&os=linux" -O orientdb-community-2.1.5.tar.gz &&\
+    tar -zxvf orientdb-community-2.1.5.tar.gz && \
+    mv orientdb-community-2.1.5 orientdb && \
+    rm -rf orientdb-community-2.1.5.tar.gz && \
     mkdir -p /orientdb/backup
 
 # RUN rm -rf /var/lib/apt/lists/*
